@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ShoppingBag,  Menu, X, ArrowRight, Package, Layers, Shirt, Box ,  Sparkles} from "lucide-react";
+import { ShoppingBag,  Menu, X, ArrowRight, Package, Layers, Shirt, Box } from "lucide-react";
 import Link from "next/link";
 import Image from 'next/image';
 
@@ -363,55 +363,97 @@ export default function Home() {
 
 
 
+<footer className="bg-neutral-950 text-neutral-400 pt-20 pb-10 border-t border-neutral-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+          
+          {/* Brand Info & Socials */}
+          <div className="col-span-1 md:col-span-2">
+            <Link href="/" className="text-2xl font-black tracking-tighter mb-4 block text-white">
+              ART<span className="text-indigo-500">VIBE</span>
+            </Link>
+            <p className="text-neutral-400 max-w-md mb-6">
+              Premium A3 & A4 posters, printed apparel, and revolutionary 3D wall signs to make your space and style truly yours.
+            </p>
 
-      {/* FOOTER */}
-      <footer className="bg-slate-50 pt-20 pb-10 border-t border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-            <div className="col-span-1 md:col-span-2">
-              <Link href="/" className="text-2xl font-black tracking-tighter mb-4 block">
-                ART<span className="text-indigo-600">VIBE</span>
-              </Link>
-              <p className="text-slate-500 max-w-md mb-6">
-                Premium A3 & A4 posters, printed apparel, and revolutionary 3D wall signs to make your space and style truly yours.
-              </p>
-              <div className="flex gap-4">
-                <div className="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 hover:bg-indigo-600 hover:text-white transition-colors cursor-pointer">IG</div>
-                <div className="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 hover:bg-indigo-600 hover:text-white transition-colors cursor-pointer">TT</div>
-                <div className="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 hover:bg-indigo-600 hover:text-white transition-colors cursor-pointer">X</div>
-              </div>
-            </div>
+            {/* Social Icons (Pure Inline SVGs) */}
+            <div className="flex gap-3">
+              {/* Instagram */}
+              <a 
+                href="https://instagram.com" 
+                target="_blank" 
+                rel="noreferrer"
+                aria-label="Instagram"
+                className="w-10 h-10 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center text-neutral-300 hover:bg-indigo-600 hover:text-white hover:border-indigo-600 transition-all cursor-pointer"
+              >
+                <svg className="w-4 h-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+              </a>
 
-            <div>
-              <h4 className="font-bold text-slate-900 mb-6">Shop</h4>
-              <ul className="space-y-4 text-slate-500">
-                <li><Link href="#" className="hover:text-indigo-600 transition-colors">A3/A4 Posters</Link></li>
-                <li><Link href="#" className="hover:text-indigo-600 transition-colors">Custom Bundles</Link></li>
-                <li><Link href="#" className="hover:text-indigo-600 transition-colors">Printed Apparel</Link></li>
-                <li><Link href="#" className="hover:text-indigo-600 transition-colors">3D Wall Signs</Link></li>
-              </ul>
-            </div>
+              {/* TikTok */}
+              <a 
+                href="https://tiktok.com" 
+                target="_blank" 
+                rel="noreferrer"
+                aria-label="TikTok"
+                className="w-10 h-10 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center text-neutral-300 hover:bg-indigo-600 hover:text-white hover:border-indigo-600 transition-all cursor-pointer"
+              >
+                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 1 1-5.2-1.74 2.89 2.89 0 0 1 2.31-2.83V7.65a7 7 0 1 0 8.84 6.78V9.39a8.16 8.16 0 0 0 4.27 1.18V7.12a4.83 4.83 0 0 1-3-0.43z"/>
+                </svg>
+              </a>
 
-            <div>
-              <h4 className="font-bold text-slate-900 mb-6">Support</h4>
-              <ul className="space-y-4 text-slate-500">
-                <li><Link href="#" className="hover:text-indigo-600 transition-colors">Shipping & Returns</Link></li>
-                <li><Link href="#" className="hover:text-indigo-600 transition-colors">FAQ</Link></li>
-                <li><Link href="#" className="hover:text-indigo-600 transition-colors">Contact Us</Link></li>
-                <li><Link href="#" className="hover:text-indigo-600 transition-colors">Track Order</Link></li>
-              </ul>
+              {/* YouTube */}
+              <a 
+                href="https://youtube.com" 
+                target="_blank" 
+                rel="noreferrer"
+                aria-label="YouTube"
+                className="w-10 h-10 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center text-neutral-300 hover:bg-indigo-600 hover:text-white hover:border-indigo-600 transition-all cursor-pointer"
+              >
+                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
+              </a>
             </div>
           </div>
 
-          <div className="border-t border-slate-200 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-slate-500">
-            <p>© {new Date().getFullYear()} ArtVibe. All rights reserved.</p>
-            <div className="flex gap-6">
-              <Link href="#" className="hover:text-slate-900">Privacy Policy</Link>
-              <Link href="#" className="hover:text-slate-900">Terms of Service</Link>
-            </div>
+          {/* Shop Links */}
+          <div>
+            <h4 className="font-bold text-white mb-6">Shop</h4>
+            <ul className="space-y-4 text-neutral-400">
+              <li><Link href="#" className="hover:text-indigo-400 transition-colors">A3/A4 Posters</Link></li>
+              <li><Link href="#" className="hover:text-indigo-400 transition-colors">Custom Bundles</Link></li>
+              <li><Link href="#" className="hover:text-indigo-400 transition-colors">Printed Apparel</Link></li>
+              <li><Link href="#" className="hover:text-indigo-400 transition-colors">3D Wall Signs</Link></li>
+            </ul>
+          </div>
+
+          {/* Support Links */}
+          <div>
+            <h4 className="font-bold text-white mb-6">Support</h4>
+            <ul className="space-y-4 text-neutral-400">
+              <li><Link href="#" className="hover:text-indigo-400 transition-colors">Shipping & Returns</Link></li>
+              <li><Link href="#" className="hover:text-indigo-400 transition-colors">FAQ</Link></li>
+              <li><Link href="#" className="hover:text-indigo-400 transition-colors">Contact Us</Link></li>
+              <li><Link href="#" className="hover:text-indigo-400 transition-colors">Track Order</Link></li>
+            </ul>
           </div>
         </div>
-      </footer>
+
+        {/* Bottom Bar */}
+        <div className="border-t border-neutral-900 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-neutral-500">
+          <p>© {new Date().getFullYear()} ArtVibe. All rights reserved.</p>
+          <div className="flex gap-6">
+            <Link href="#" className="hover:text-neutral-300 transition-colors">Privacy Policy</Link>
+            <Link href="#" className="hover:text-neutral-300 transition-colors">Terms of Service</Link>
+          </div>
+        </div>
+      </div>
+    </footer>
 
     </div>
   );
