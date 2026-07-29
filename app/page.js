@@ -547,7 +547,7 @@ const [selectedSize, setSelectedSize] = useState('A3');
           {/* Brand Info & Socials */}
           <div className="col-span-1 md:col-span-2">
             <Link href="/" className="text-2xl font-black tracking-tighter mb-4 block text-white">
-              ART<span className="text-indigo-500">VIBE</span>
+              CAR<span className="text-yellow-400">ESTICS</span>
             </Link>
             <p className="text-neutral-400 max-w-md mb-6">
               Premium A3 & A4 posters, printed apparel, and revolutionary 3D wall signs to make your space and style truly yours.
@@ -561,7 +561,7 @@ const [selectedSize, setSelectedSize] = useState('A3');
                 target="_blank" 
                 rel="noreferrer"
                 aria-label="Instagram"
-                className="w-10 h-10 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center text-neutral-300 hover:bg-indigo-600 hover:text-white hover:border-indigo-600 transition-all cursor-pointer"
+                className="w-10 h-10 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center text-neutral-300 hover:bg-yellow-400 hover:text-white hover:border-yellow-400 transition-all cursor-pointer"
               >
                 <svg className="w-4 h-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
@@ -576,7 +576,7 @@ const [selectedSize, setSelectedSize] = useState('A3');
                 target="_blank" 
                 rel="noreferrer"
                 aria-label="TikTok"
-                className="w-10 h-10 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center text-neutral-300 hover:bg-indigo-600 hover:text-white hover:border-indigo-600 transition-all cursor-pointer"
+                className="w-10 h-10 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center text-neutral-300 hover:bg-yellow-400 hover:text-white hover:border-yellow-600 transition-all cursor-pointer"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
                   <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 1 1-5.2-1.74 2.89 2.89 0 0 1 2.31-2.83V7.65a7 7 0 1 0 8.84 6.78V9.39a8.16 8.16 0 0 0 4.27 1.18V7.12a4.83 4.83 0 0 1-3-0.43z"/>
@@ -589,7 +589,7 @@ const [selectedSize, setSelectedSize] = useState('A3');
                 target="_blank" 
                 rel="noreferrer"
                 aria-label="YouTube"
-                className="w-10 h-10 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center text-neutral-300 hover:bg-indigo-600 hover:text-white hover:border-indigo-600 transition-all cursor-pointer"
+                className="w-10 h-10 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center text-neutral-300 hover:bg-yellow-400 hover:text-white hover:border-yellow-400 transition-all cursor-pointer"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
                   <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
