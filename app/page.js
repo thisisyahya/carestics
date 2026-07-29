@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ShoppingBag,  Menu, X, ArrowRight, Package, Layers, Shirt, Box } from "lucide-react";
+import { ShoppingBag,  Menu, X, ArrowRight, Package, Layers, Shirt, Box, ShieldCheck, Sparkles, FileImage, Palette, Upload, Check} from "lucide-react";
 import Link from "next/link";
 import Image from 'next/image';
 
@@ -93,9 +93,14 @@ const slideVariants = {
 
 
 
+
 export default function Home() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+
+const [selectedSize, setSelectedSize] = useState('A3');
+  const [uploadedFile, setUploadedFile] = useState(null);
+  const [dragActive, setDragActive] = useState(false);
 
   // Auto-play effect: changes the slide every 3 seconds
   useEffect(() => {
@@ -107,8 +112,44 @@ export default function Home() {
     return () => clearInterval(timer);
   }, []);
 
+
+
+  
+
+  // Size specifications & pricing
+  const sizes = [
+    { id: 'A4', label: 'A4 Size', dimensions: '21 x 29.7 cm (8.3 x 11.7 in)', price: '$49' },
+    { id: 'A3', label: 'A3 Size', dimensions: '29.7 x 42 cm (11.7 x 16.5 in)', price: '$79', popular: true },
+    { id: 'A2', label: 'A2 Size', dimensions: '42 x 59.4 cm (16.5 x 23.4 in)', price: '$119' },
+  ];
+
+  const handleFileChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setUploadedFile(e.target.files[0]);
+    }
+  };
+
+  const handleDrag = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.type === "dragenter" || e.type === "dragover") {
+      setDragActive(true);
+    } else if (e.type === "dragleave") {
+      setDragActive(false);
+    }
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      setUploadedFile(e.dataTransfer.files[0]);
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-indigo-100 selection:text-indigo-900 overflow-x-hidden">
+    <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-indigo-100 selection:text-indigo-900 overflow-x-hidden">
 
       {/* NAVBAR */}
       <nav className="fixed top-7 w-full z-50  transition-all duration-300">
@@ -358,6 +399,142 @@ export default function Home() {
     </div>
   </div>
 </section>
+
+
+
+
+
+<section className="relative  bg-black max-w-6xl rounded-3xl sm:mx-auto overflow-hidden font-sans mb-20 mx-4">
+      {/* 
+        Pencilled / Noise Texture Overlay 
+        Replace the background image URL with your actual texture asset.
+      */}
+      <div 
+        className="absolute inset-0 opacity-20 pointer-events-none mix-blend-overlay"
+        style={{ backgroundImage: "url('/textures/pencil-noise.png')", backgroundSize: 'cover' }}
+      ></div>
+
+      {/* Minimal Container */}
+      <div className="relative max-w-6xl mx-auto bg-zinc-900/40 backdrop-blur-md p-8 sm:p-14 text-zinc-200 border border-zinc-800/60 shadow-2xl">
+        
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          
+          {/* Hand-Drawn Image Container */}
+          <div className="w-full rounded-xl overflow-hidden border border-zinc-800/80 bg-zinc-900 relative group">
+            <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
+            <img
+              src="/drawings/hero-p1.PNG"
+              alt="Custom hand drawn portrait example"
+              className="w-full h-80 sm:h-[480px] object-cover object-center grayscale-[20%] contrast-125"
+            />
+          </div>
+
+          {/* Minimal Upload & Form */}
+          <div className="flex flex-col justify-center space-y-10">
+            
+            {/* Header */}
+            <div className="space-y-3">
+              <h2 className="text-3xl sm:text-4xl font-light tracking-tight text-zinc-50">
+                Commission a <span className="font-semibold">Portrait</span>
+              </h2>
+              <p className="text-zinc-400 text-sm sm:text-base leading-relaxed max-w-md">
+                Upload your reference photo, select a canvas size, and our artists will meticulously sketch it on premium archival paper.
+              </p>
+            </div>
+
+            <div className="space-y-8">
+              {/* Drag and Drop Zone */}
+              <div
+                onDragEnter={handleDrag}
+                onDragLeave={handleDrag}
+                onDragOver={handleDrag}
+                onDrop={handleDrop}
+                className={`relative rounded-xl p-8 text-center transition-all duration-300 ease-in-out cursor-pointer border ${
+                  dragActive
+                    ? 'border-zinc-400 bg-zinc-800/50'
+                    : uploadedFile
+                      ? 'border-zinc-500 bg-zinc-800/20'
+                      : 'border-zinc-800 hover:border-zinc-600 bg-zinc-900/30'
+                }`}
+              >
+                <input
+                  type="file"
+                  id="drawing-upload"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                />
+
+                {uploadedFile ? (
+                  <div className="flex flex-col items-center justify-center gap-3 animate-in fade-in zoom-in duration-300">
+                    <div className="w-12 h-12 rounded-full bg-zinc-100 text-zinc-900 flex items-center justify-center">
+                      <Check size={20} strokeWidth={2.5} />
+                    </div>
+                    <p className="text-sm font-medium text-zinc-200 truncate max-w-[200px]">
+                      {uploadedFile.name}
+                    </p>
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center gap-4">
+                    <div className="w-12 h-12 rounded-full bg-zinc-800/80 flex items-center justify-center text-zinc-400">
+                      <Upload size={18} strokeWidth={2} />
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-sm font-medium text-zinc-300">
+                        Drag & drop an image
+                      </p>
+                      <p className="text-xs text-zinc-500">
+                        or click to browse files
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Size Selector */}
+              <div>
+                <label className="block text-[11px] font-medium text-zinc-500 uppercase tracking-widest mb-4">
+                  Dimensions
+                </label>
+                <div className="grid grid-cols-3 gap-3 sm:gap-4">
+                  {sizes.map((size) => {
+                    const isSelected = selectedSize === size.id;
+                    return (
+                      <button
+                        key={size.id}
+                        type="button"
+                        onClick={() => setSelectedSize(size.id)}
+                        className={`py-4 px-3 rounded-xl border text-center transition-all duration-200 flex flex-col items-center justify-center gap-1 ${
+                          isSelected
+                            ? 'border-zinc-200 bg-zinc-200 text-zinc-950 shadow-sm'
+                            : 'border-zinc-800 bg-transparent text-zinc-400 hover:border-zinc-600 hover:text-zinc-300'
+                        }`}
+                      >
+                        <span className="font-semibold text-sm block tracking-wide">
+                          {size.label}
+                        </span>
+                        <span className={`text-[10px] block ${isSelected ? 'text-zinc-600' : 'text-zinc-500'}`}>
+                          {size.dimensions}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
+            {/* Action Button */}
+            <button
+              type="button"
+              className="w-full bg-zinc-100 hover:bg-white text-zinc-950 font-semibold text-sm tracking-wide py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(255,255,255,0.05)] hover:shadow-[0_0_25px_rgba(255,255,255,0.1)] active:scale-[0.99]"
+            >
+              Order Hand Drawing
+            </button>
+
+          </div>
+        </div>
+      </div>
+    </section>
 
 
 
