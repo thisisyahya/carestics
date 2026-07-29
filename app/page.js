@@ -310,56 +310,54 @@ export default function Home() {
 
 
 
-     <section id="bundles" className="py-16 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Main Outer Box (Blue with Rounded Corners) */}
-        <div className="relative rounded-3xl bg-blue-950 p-8 sm:p-12 overflow-hidden text-white flex flex-col items-center text-center shadow-xl">
-          
-          {/* Subtle Ambient Glow */}
-          <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-blue-400/20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+<section id="bundles" className="py-16 bg-white">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    {/* Main Outer Box */}
+    <div className="relative rounded-4xl bg-blue-950 p-8 sm:p-12 overflow-hidden text-white flex flex-col items-center text-center shadow-xl">
+      
+      {/* Subtle Ambient Glow */}
+      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-blue-400/20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
 
-          {/* Text Description */}
-          <motion.p 
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-md sm:text-xl  tracking-tight text-blue-50 max-w-3xl mb-6"
-          >
-            shop the custom aesthetic wallpaer for your prestegious wall
-          </motion.p>
+      {/* Text Description */}
+      <motion.p 
+        initial={{ opacity: 0, y: 15 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className=" sm:text-lg tracking-tight text-blue-50 max-w-3xl mb-6 capitalize"
+      >
+        Shop the custom aesthetic wallpaper for your prestigious wall available in different sizes
+      </motion.p>
 
-          {/* Compact White Button with Small Shop Icon */}
-          <motion.button 
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="inline-flex items-center gap-2 bg-white text-blue-600 hover:bg-blue-50 text-sm font-semibold px-4 py-2 rounded-full transition-all duration-200 shadow-md mb-10 hover:scale-105"
-          >
-            <ShoppingBag size={15} />
-            <span>Shop Now</span>
-          </motion.button>
+      {/* Button */}
+      <motion.button 
+        initial={{ opacity: 0, y: 10 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.1 }}
+        className="inline-flex items-center gap-2 bg-white text-blue-600 hover:bg-blue-50 text-sm font-semibold px-4 py-2 rounded-full transition-all duration-200 shadow-md mb-10 hover:scale-105"
+      >
+        <ShoppingBag size={15} />
+        <span>Shop Now</span>
+      </motion.button>
 
-          {/* Single Wide / Horizontally Narrow Banner Image */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-            className="w-full max-w-5xl h-32 sm:h-44 rounded-2xl overflow-hidden shadow-2xl border border-white/10"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1600&q=80" // Replace with your wide banner image URL
-              alt="Custom aesthetic wallpaper preview"
-              className="w-full h-full object-cover object-center"
-            />
-          </motion.div>
+      {/* Image Container with Natural Aspect Ratio */}
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.2, duration: 0.6 }}
+        className="w-[60%] max-w-5xl rounded-2xl overflow-hidden shadow-2xl border border-white/10"
+      >
+        <img
+          src="/posters/hero-p1.png"
+          alt="Custom aesthetic wallpaper preview"
+          className="w-full h-auto object-contain mx-auto"
+        />
+      </motion.div>
 
-        </div>
-
-      </div>
-    </section>
+    </div>
+  </div>
+</section>
 
 
 
