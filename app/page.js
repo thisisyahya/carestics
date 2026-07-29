@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ShoppingBag,  Menu, X, ArrowRight, Package, Layers, Shirt, Box, ShieldCheck, Sparkles, FileImage, Palette, Upload, Check} from "lucide-react";
+import { ShoppingBag, Menu, X, ArrowRight, Package, Layers, Shirt, Box, ShieldCheck, Sparkles, FileImage, Palette, Upload, Check } from "lucide-react";
 import Link from "next/link";
 import Image from 'next/image';
 
@@ -91,16 +91,28 @@ const slideVariants = {
   },
 };
 
-
+// 1. Create an array mapping thumbnails to their hero images
+const imageData = [
+  { id: 1, thumb: "/posters/slider-p1.jpg", hero: "/posters/hero-p1.png" },
+  { id: 2, thumb: "/posters/slider-p2.jpg", hero: "/posters/hero-p2.png" },
+  { id: 3, thumb: "/posters/slider-p3.jpg", hero: "/posters/hero-p3.png" },
+  { id: 4, thumb: "/posters/slider-p4.jpg", hero: "/posters/hero-p4.png" },
+  { id: 5, thumb: "/posters/slider-p5.jpg", hero: "/posters/hero-p5.png" },
+];
 
 
 export default function Home() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-const [selectedSize, setSelectedSize] = useState('A3');
+  const [selectedSize, setSelectedSize] = useState('A3');
   const [uploadedFile, setUploadedFile] = useState(null);
   const [dragActive, setDragActive] = useState(false);
+  // 2. State to track the currently active image ID (defaults to 1)
+  const [activeId, setActiveId] = useState(1);
+
+  // 3. Find the hero image URL based on the active ID
+  const currentHero = imageData.find((img) => img.id === activeId)?.hero || imageData[0].hero;
 
   // Auto-play effect: changes the slide every 3 seconds
   useEffect(() => {
@@ -114,7 +126,7 @@ const [selectedSize, setSelectedSize] = useState('A3');
 
 
 
-  
+
 
   // Size specifications & pricing
   const sizes = [
@@ -166,7 +178,7 @@ const [selectedSize, setSelectedSize] = useState('A3');
             </div>
           </div>
           <div className="flex items-center gap-4">
-            
+
             <button className="p-2 text-slate-400 hover:text-indigo-600 transition-colors relative">
               <ShoppingBag size={20} />
               <span className="absolute top-1 right-1 w-2 h-2 bg-indigo-600 rounded-full"></span>
@@ -268,7 +280,7 @@ const [selectedSize, setSelectedSize] = useState('A3');
       </section>
 
 
-   {/* FEATURED PRODUCTS */}
+      {/* FEATURED PRODUCTS */}
       <section id="shop" className="py-24 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-end mb-12">
@@ -351,286 +363,311 @@ const [selectedSize, setSelectedSize] = useState('A3');
 
 
 
-<section id="bundles" className="py-16 bg-white">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    {/* Main Outer Box */}
-    <div className="relative rounded-4xl bg-blue-950 p-8 sm:p-12 overflow-hidden text-white flex flex-col items-center text-center shadow-xl">
-      
-      {/* Subtle Ambient Glow */}
-      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-blue-400/20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+      <section id="bundles" className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Main Outer Box */}
+          <div className="relative rounded-4xl bg-blue-950 p-8 sm:p-12 overflow-hidden text-white flex flex-col items-center text-center shadow-xl">
 
-      {/* Text Description */}
-      <motion.p 
-        initial={{ opacity: 0, y: 15 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className=" sm:text-lg tracking-tight text-blue-50 max-w-3xl mb-6 capitalize"
-      >
-        Shop the custom aesthetic wallpaper for your prestigious wall available in different sizes
-      </motion.p>
+            {/* Subtle Ambient Glow */}
+            <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-blue-400/20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
 
-      {/* Button */}
-      <motion.button 
-        initial={{ opacity: 0, y: 10 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.1 }}
-        className="inline-flex items-center gap-2 bg-white text-blue-600 hover:bg-blue-50 text-sm font-semibold px-4 py-2 rounded-full transition-all duration-200 shadow-md mb-10 hover:scale-105"
-      >
-        <ShoppingBag size={15} />
-        <span>Shop Now</span>
-      </motion.button>
+            {/* Text Description */}
+            <motion.p
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className=" sm:text-lg tracking-tight text-blue-50 max-w-3xl mb-6 capitalize"
+            >
+              Shop the custom aesthetic wallpaper for your prestigious wall available in different sizes
+            </motion.p>
 
-      {/* Image Container with Natural Aspect Ratio */}
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.2, duration: 0.6 }}
-        className="w-[60%] max-w-5xl rounded-2xl overflow-hidden shadow-2xl border border-white/10"
-      >
-        <img
-          src="/posters/hero-p1.png"
-          alt="Custom aesthetic wallpaper preview"
-          className="w-full h-auto object-contain mx-auto"
-        />
-      </motion.div>
-
-    </div>
-  </div>
-</section>
+            {/* Button */}
+            <motion.button
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="inline-flex items-center gap-2 bg-white text-blue-600 hover:bg-blue-50 text-sm font-semibold px-4 py-2 rounded-full transition-all duration-200 shadow-md mb-10 hover:scale-105"
+            >
+              <ShoppingBag size={15} />
+              <span>Shop Now</span>
+            </motion.button>
 
 
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+              className="w-[95%] sm:w-[80%] md:w-[60%] max-w-5xl rounded-2xl overflow-hidden"
+            >
+              <div className="flex flex-col gap-3">
+                {/* TOP ROW: THUMBNAILS */}
+                <div className="flex flex-row gap-3 w-full overflow-x-auto hide-scrollbar shrink-0 pb-1">
+                  {imageData.map((img) => (
+                    <img
+                      key={img.id}
+                      src={img.thumb}
+                      alt={`Thumbnail ${img.id}`}
+                      onClick={() => setActiveId(img.id)}
+                      // I've added a cursor-pointer and dynamic borders/opacity so the active thumbnail stands out
+                      className={`h-16 w-16 sm:h-20 sm:w-20 shrink-0 aspect-square object-cover rounded-md cursor-pointer transition-all duration-200 ${activeId === img.id
+                          ? "border-2 border-white opacity-100" // Active state
+                          : "border border-white/40 opacity-60 hover:opacity-100" // Inactive state
+                        }`}
+                    />
+                  ))}
+                </div>
+
+                {/* BOTTOM: MAIN IMAGE */}
+                <div className="w-full rounded-lg overflow-hidden border border-white/10 bg-zinc-900/50 flex items-center justify-center">
+                  {/* Framer motion on the image itself adds a nice crossfade effect when switching */}
+                  <motion.img
+                    key={currentHero} // The key forces React to re-mount the image, triggering the animation
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                    src={currentHero}
+                    alt="Custom aesthetic wallpaper preview"
+                    className="w-full h-auto object-contain mx-auto"
+                  />
+                </div>
+              </div>
+            </motion.div>
+
+          </div>
+        </div>
+      </section>
 
 
 
-<section className="relative  bg-black max-w-6xl rounded-3xl sm:mx-auto overflow-hidden font-sans mb-20 mx-4">
-      {/* 
+
+
+      <section className="relative  bg-black max-w-6xl rounded-3xl sm:mx-auto overflow-hidden font-sans mb-20 mx-4">
+        {/* 
         Pencilled / Noise Texture Overlay 
         Replace the background image URL with your actual texture asset.
       */}
-      <div 
-        className="absolute inset-0 opacity-20 pointer-events-none mix-blend-overlay"
-        style={{ backgroundImage: "url('/textures/pencil-noise.png')", backgroundSize: 'cover' }}
-      ></div>
+        <div
+          className="absolute inset-0 opacity-20 pointer-events-none mix-blend-overlay"
+          style={{ backgroundImage: "url('/textures/pencil-noise.png')", backgroundSize: 'cover' }}
+        ></div>
 
-      {/* Minimal Container */}
-      <div className="relative max-w-6xl mx-auto bg-zinc-900/40 backdrop-blur-md p-8 sm:p-14 text-zinc-200 border border-zinc-800/60 shadow-2xl">
-        
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          
-          {/* Hand-Drawn Image Container */}
-          <div className="w-full rounded-xl overflow-hidden border border-zinc-800/80 bg-zinc-900 relative group">
-            <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
-            <img
-              src="/drawings/hero-p1.PNG"
-              alt="Custom hand drawn portrait example"
-              className="w-full h-80 sm:h-[480px] object-cover object-center grayscale-[20%] contrast-125"
-            />
-          </div>
+        {/* Minimal Container */}
+        <div className="relative max-w-6xl mx-auto bg-zinc-900/40 backdrop-blur-md p-8 sm:p-14 text-zinc-200 border border-zinc-800/60 shadow-2xl">
 
-          {/* Minimal Upload & Form */}
-          <div className="flex flex-col justify-center space-y-10">
-            
-            {/* Header */}
-            <div className="space-y-3">
-              <h2 className="text-3xl sm:text-4xl font-light tracking-tight text-zinc-50">
-                Commission a <span className="font-semibold">Portrait</span>
-              </h2>
-              <p className="text-zinc-400 text-sm sm:text-base leading-relaxed max-w-md">
-                Upload your reference photo, select a canvas size, and our artists will meticulously sketch it on premium archival paper.
-              </p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+            {/* Hand-Drawn Image Container */}
+            <div className="w-full rounded-xl overflow-hidden border border-zinc-800/80 bg-zinc-900 relative group">
+              <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
+              <img
+                src="/drawings/hero-p1.PNG"
+                alt="Custom hand drawn portrait example"
+                className="w-full h-80 sm:h-[480px] object-cover object-center grayscale-[20%] contrast-125"
+              />
             </div>
 
-            <div className="space-y-8">
-              {/* Drag and Drop Zone */}
-              <div
-                onDragEnter={handleDrag}
-                onDragLeave={handleDrag}
-                onDragOver={handleDrag}
-                onDrop={handleDrop}
-                className={`relative rounded-xl p-8 text-center transition-all duration-300 ease-in-out cursor-pointer border ${
-                  dragActive
+            {/* Minimal Upload & Form */}
+            <div className="flex flex-col justify-center space-y-10">
+
+              {/* Header */}
+              <div className="space-y-3">
+                <h2 className="text-3xl sm:text-4xl font-light tracking-tight text-zinc-50">
+                  Commission a <span className="font-semibold">Portrait</span>
+                </h2>
+                <p className="text-zinc-400 text-sm sm:text-base leading-relaxed max-w-md">
+                  Upload your reference photo, select a canvas size, and our artists will meticulously sketch it on premium archival paper.
+                </p>
+              </div>
+
+              <div className="space-y-8">
+                {/* Drag and Drop Zone */}
+                <div
+                  onDragEnter={handleDrag}
+                  onDragLeave={handleDrag}
+                  onDragOver={handleDrag}
+                  onDrop={handleDrop}
+                  className={`relative rounded-xl p-8 text-center transition-all duration-300 ease-in-out cursor-pointer border ${dragActive
                     ? 'border-zinc-400 bg-zinc-800/50'
                     : uploadedFile
                       ? 'border-zinc-500 bg-zinc-800/20'
                       : 'border-zinc-800 hover:border-zinc-600 bg-zinc-900/30'
-                }`}
-              >
-                <input
-                  type="file"
-                  id="drawing-upload"
-                  accept="image/*"
-                  onChange={handleFileChange}
-                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                />
+                    }`}
+                >
+                  <input
+                    type="file"
+                    id="drawing-upload"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  />
 
-                {uploadedFile ? (
-                  <div className="flex flex-col items-center justify-center gap-3 animate-in fade-in zoom-in duration-300">
-                    <div className="w-12 h-12 rounded-full bg-zinc-100 text-zinc-900 flex items-center justify-center">
-                      <Check size={20} strokeWidth={2.5} />
-                    </div>
-                    <p className="text-sm font-medium text-zinc-200 truncate max-w-[200px]">
-                      {uploadedFile.name}
-                    </p>
-                  </div>
-                ) : (
-                  <div className="flex flex-col items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-zinc-800/80 flex items-center justify-center text-zinc-400">
-                      <Upload size={18} strokeWidth={2} />
-                    </div>
-                    <div className="space-y-1">
-                      <p className="text-sm font-medium text-zinc-300">
-                        Drag & drop an image
-                      </p>
-                      <p className="text-xs text-zinc-500">
-                        or click to browse files
+                  {uploadedFile ? (
+                    <div className="flex flex-col items-center justify-center gap-3 animate-in fade-in zoom-in duration-300">
+                      <div className="w-12 h-12 rounded-full bg-zinc-100 text-zinc-900 flex items-center justify-center">
+                        <Check size={20} strokeWidth={2.5} />
+                      </div>
+                      <p className="text-sm font-medium text-zinc-200 truncate max-w-[200px]">
+                        {uploadedFile.name}
                       </p>
                     </div>
-                  </div>
-                )}
-              </div>
+                  ) : (
+                    <div className="flex flex-col items-center gap-4">
+                      <div className="w-12 h-12 rounded-full bg-zinc-800/80 flex items-center justify-center text-zinc-400">
+                        <Upload size={18} strokeWidth={2} />
+                      </div>
+                      <div className="space-y-1">
+                        <p className="text-sm font-medium text-zinc-300">
+                          Drag & drop an image
+                        </p>
+                        <p className="text-xs text-zinc-500">
+                          or click to browse files
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </div>
 
-              {/* Size Selector */}
-              <div>
-                <label className="block text-[11px] font-medium text-zinc-500 uppercase tracking-widest mb-4">
-                  Dimensions
-                </label>
-                <div className="grid grid-cols-3 gap-3 sm:gap-4">
-                  {sizes.map((size) => {
-                    const isSelected = selectedSize === size.id;
-                    return (
-                      <button
-                        key={size.id}
-                        type="button"
-                        onClick={() => setSelectedSize(size.id)}
-                        className={`py-4 px-3 rounded-xl border text-center transition-all duration-200 flex flex-col items-center justify-center gap-1 ${
-                          isSelected
+                {/* Size Selector */}
+                <div>
+                  <label className="block text-[11px] font-medium text-zinc-500 uppercase tracking-widest mb-4">
+                    Dimensions
+                  </label>
+                  <div className="grid grid-cols-3 gap-3 sm:gap-4">
+                    {sizes.map((size) => {
+                      const isSelected = selectedSize === size.id;
+                      return (
+                        <button
+                          key={size.id}
+                          type="button"
+                          onClick={() => setSelectedSize(size.id)}
+                          className={`py-4 px-3 rounded-xl border text-center transition-all duration-200 flex flex-col items-center justify-center gap-1 ${isSelected
                             ? 'border-zinc-200 bg-zinc-200 text-zinc-950 shadow-sm'
                             : 'border-zinc-800 bg-transparent text-zinc-400 hover:border-zinc-600 hover:text-zinc-300'
-                        }`}
-                      >
-                        <span className="font-semibold text-sm block tracking-wide">
-                          {size.label}
-                        </span>
-                        <span className={`text-[10px] block ${isSelected ? 'text-zinc-600' : 'text-zinc-500'}`}>
-                          {size.dimensions}
-                        </span>
-                      </button>
-                    );
-                  })}
+                            }`}
+                        >
+                          <span className="font-semibold text-sm block tracking-wide">
+                            {size.label}
+                          </span>
+                          <span className={`text-[10px] block ${isSelected ? 'text-zinc-600' : 'text-zinc-500'}`}>
+                            {size.dimensions}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
+              </div>
+
+              {/* Action Button */}
+              <button
+                type="button"
+                className="w-full bg-zinc-100 hover:bg-white text-zinc-950 font-semibold text-sm tracking-wide py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(255,255,255,0.05)] hover:shadow-[0_0_25px_rgba(255,255,255,0.1)] active:scale-[0.99]"
+              >
+                Order Hand Drawing
+              </button>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+
+
+
+      <footer className="bg-neutral-950 text-neutral-400 pt-20 pb-10 border-t border-neutral-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+
+            {/* Brand Info & Socials */}
+            <div className="col-span-1 md:col-span-2">
+              <Link href="/" className="text-2xl font-black tracking-tighter mb-4 block text-white">
+                CAR<span className="text-yellow-400">ESTICS</span>
+              </Link>
+              <p className="text-neutral-400 max-w-md mb-6">
+                Premium A3 & A4 posters, printed apparel, and revolutionary 3D wall signs to make your space and style truly yours.
+              </p>
+
+              {/* Social Icons (Pure Inline SVGs) */}
+              <div className="flex gap-3">
+                {/* Instagram */}
+                <a
+                  href="https://instagram.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Instagram"
+                  className="w-10 h-10 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center text-neutral-300 hover:bg-yellow-400 hover:text-white hover:border-yellow-400 transition-all cursor-pointer"
+                >
+                  <svg className="w-4 h-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                </a>
+
+                {/* TikTok */}
+                <a
+                  href="https://tiktok.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="TikTok"
+                  className="w-10 h-10 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center text-neutral-300 hover:bg-yellow-400 hover:text-white hover:border-yellow-600 transition-all cursor-pointer"
+                >
+                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 1 1-5.2-1.74 2.89 2.89 0 0 1 2.31-2.83V7.65a7 7 0 1 0 8.84 6.78V9.39a8.16 8.16 0 0 0 4.27 1.18V7.12a4.83 4.83 0 0 1-3-0.43z" />
+                  </svg>
+                </a>
+
+                {/* YouTube */}
+                <a
+                  href="https://youtube.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="YouTube"
+                  className="w-10 h-10 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center text-neutral-300 hover:bg-yellow-400 hover:text-white hover:border-yellow-400 transition-all cursor-pointer"
+                >
+                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                  </svg>
+                </a>
               </div>
             </div>
 
-            {/* Action Button */}
-            <button
-              type="button"
-              className="w-full bg-zinc-100 hover:bg-white text-zinc-950 font-semibold text-sm tracking-wide py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(255,255,255,0.05)] hover:shadow-[0_0_25px_rgba(255,255,255,0.1)] active:scale-[0.99]"
-            >
-              Order Hand Drawing
-            </button>
+            {/* Shop Links */}
+            <div>
+              <h4 className="font-bold text-white mb-6">Shop</h4>
+              <ul className="space-y-4 text-neutral-400">
+                <li><Link href="#" className="hover:text-indigo-400 transition-colors">A3/A4 Posters</Link></li>
+                <li><Link href="#" className="hover:text-indigo-400 transition-colors">Custom Bundles</Link></li>
+                <li><Link href="#" className="hover:text-indigo-400 transition-colors">Printed Apparel</Link></li>
+                <li><Link href="#" className="hover:text-indigo-400 transition-colors">3D Wall Signs</Link></li>
+              </ul>
+            </div>
 
-          </div>
-        </div>
-      </div>
-    </section>
-
-
-
-
-
-<footer className="bg-neutral-950 text-neutral-400 pt-20 pb-10 border-t border-neutral-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-          
-          {/* Brand Info & Socials */}
-          <div className="col-span-1 md:col-span-2">
-            <Link href="/" className="text-2xl font-black tracking-tighter mb-4 block text-white">
-              CAR<span className="text-yellow-400">ESTICS</span>
-            </Link>
-            <p className="text-neutral-400 max-w-md mb-6">
-              Premium A3 & A4 posters, printed apparel, and revolutionary 3D wall signs to make your space and style truly yours.
-            </p>
-
-            {/* Social Icons (Pure Inline SVGs) */}
-            <div className="flex gap-3">
-              {/* Instagram */}
-              <a 
-                href="https://instagram.com" 
-                target="_blank" 
-                rel="noreferrer"
-                aria-label="Instagram"
-                className="w-10 h-10 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center text-neutral-300 hover:bg-yellow-400 hover:text-white hover:border-yellow-400 transition-all cursor-pointer"
-              >
-                <svg className="w-4 h-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                </svg>
-              </a>
-
-              {/* TikTok */}
-              <a 
-                href="https://tiktok.com" 
-                target="_blank" 
-                rel="noreferrer"
-                aria-label="TikTok"
-                className="w-10 h-10 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center text-neutral-300 hover:bg-yellow-400 hover:text-white hover:border-yellow-600 transition-all cursor-pointer"
-              >
-                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 1 1-5.2-1.74 2.89 2.89 0 0 1 2.31-2.83V7.65a7 7 0 1 0 8.84 6.78V9.39a8.16 8.16 0 0 0 4.27 1.18V7.12a4.83 4.83 0 0 1-3-0.43z"/>
-                </svg>
-              </a>
-
-              {/* YouTube */}
-              <a 
-                href="https://youtube.com" 
-                target="_blank" 
-                rel="noreferrer"
-                aria-label="YouTube"
-                className="w-10 h-10 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center text-neutral-300 hover:bg-yellow-400 hover:text-white hover:border-yellow-400 transition-all cursor-pointer"
-              >
-                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                </svg>
-              </a>
+            {/* Support Links */}
+            <div>
+              <h4 className="font-bold text-white mb-6">Support</h4>
+              <ul className="space-y-4 text-neutral-400">
+                <li><Link href="#" className="hover:text-indigo-400 transition-colors">Shipping & Returns</Link></li>
+                <li><Link href="#" className="hover:text-indigo-400 transition-colors">FAQ</Link></li>
+                <li><Link href="#" className="hover:text-indigo-400 transition-colors">Contact Us</Link></li>
+                <li><Link href="#" className="hover:text-indigo-400 transition-colors">Track Order</Link></li>
+              </ul>
             </div>
           </div>
 
-          {/* Shop Links */}
-          <div>
-            <h4 className="font-bold text-white mb-6">Shop</h4>
-            <ul className="space-y-4 text-neutral-400">
-              <li><Link href="#" className="hover:text-indigo-400 transition-colors">A3/A4 Posters</Link></li>
-              <li><Link href="#" className="hover:text-indigo-400 transition-colors">Custom Bundles</Link></li>
-              <li><Link href="#" className="hover:text-indigo-400 transition-colors">Printed Apparel</Link></li>
-              <li><Link href="#" className="hover:text-indigo-400 transition-colors">3D Wall Signs</Link></li>
-            </ul>
-          </div>
-
-          {/* Support Links */}
-          <div>
-            <h4 className="font-bold text-white mb-6">Support</h4>
-            <ul className="space-y-4 text-neutral-400">
-              <li><Link href="#" className="hover:text-indigo-400 transition-colors">Shipping & Returns</Link></li>
-              <li><Link href="#" className="hover:text-indigo-400 transition-colors">FAQ</Link></li>
-              <li><Link href="#" className="hover:text-indigo-400 transition-colors">Contact Us</Link></li>
-              <li><Link href="#" className="hover:text-indigo-400 transition-colors">Track Order</Link></li>
-            </ul>
+          {/* Bottom Bar */}
+          <div className="border-t border-neutral-900 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-neutral-500">
+            <p>© {new Date().getFullYear()} ArtVibe. All rights reserved.</p>
+            <div className="flex gap-6">
+              <Link href="#" className="hover:text-neutral-300 transition-colors">Privacy Policy</Link>
+              <Link href="#" className="hover:text-neutral-300 transition-colors">Terms of Service</Link>
+            </div>
           </div>
         </div>
-
-        {/* Bottom Bar */}
-        <div className="border-t border-neutral-900 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-neutral-500">
-          <p>© {new Date().getFullYear()} ArtVibe. All rights reserved.</p>
-          <div className="flex gap-6">
-            <Link href="#" className="hover:text-neutral-300 transition-colors">Privacy Policy</Link>
-            <Link href="#" className="hover:text-neutral-300 transition-colors">Terms of Service</Link>
-          </div>
-        </div>
-      </div>
-    </footer>
+      </footer>
 
     </div>
   );
