@@ -2,10 +2,17 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ShoppingBag, Search, Menu, X, ArrowRight, Star, Package, Layers, Shirt, Box } from "lucide-react";
+import { ShoppingBag,  Menu, X, ArrowRight, Package, Layers, Shirt, Box ,  Sparkles} from "lucide-react";
 import Link from "next/link";
 import Image from 'next/image';
 
+// Replace these with your actual long/narrow poster image paths
+const posterImages = [
+  'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=400&q=80',
+  'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=400&q=80',
+  'https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=400&q=80',
+  'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=400&q=80',
+];
 // --- DUMMY DATA ---
 const categories = [
   { name: "Premium Posters", desc: "A3 & A4 Museum Quality", icon: Layers, color: "bg-blue-50" },
@@ -15,10 +22,10 @@ const categories = [
 ];
 
 const featuredProducts = [
-  { id: 1, name: "Neon Tokyo Nights", type: "A3 Poster", price: "$24.00", image: "/images/printka/floating-car.png" },
-  { id: 2, name: "Minimalist Geometry", type: "A4 Poster Bundle", price: "$45.00", image: "/images/printka/box-enclosed.png" },
-  { id: 3, name: "Abstract Waves Tee", type: "Printed Shirt", price: "$35.00", image: "/images/printka/hand-drawing.png" },
-  { id: 4, name: "Stay Wild", type: "3D Wall Sign", price: "$55.00", image: "/images/printka/broken-decor.jpg" },
+  { id: 1, name: "Neon Tokyo Nights", type: "A3 Poster", price: "$24.00", image: "/featured/floating-car.png" },
+  { id: 2, name: "Minimalist Geometry", type: "A4 Poster Bundle", price: "$45.00", image: "/featured/box-enclosed.png" },
+  { id: 3, name: "Abstract Waves Tee", type: "Printed Shirt", price: "$35.00", image: "/featured/hand-drawing.png" },
+  { id: 4, name: "Stay Wild", type: "3D Wall Sign", price: "$55.00", image: "/featured/broken-decor.jpg" },
 ];
 
 const heroImages = [
@@ -104,13 +111,13 @@ export default function Home() {
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-indigo-100 selection:text-indigo-900 overflow-x-hidden">
 
       {/* NAVBAR */}
-      <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b border-slate-200/50 transition-all duration-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <nav className="fixed top-7 w-full z-50  transition-all duration-300">
+        <div className="max-w-5xl mx-auto px-6  py-3 flex items-center backdrop-blur-md justify-between border border-slate-200/50 bg-slate-400/20 rounded-full">
           <div className="flex items-center gap-8">
-            <Link href="/" className="text-2xl font-black tracking-tighter">
-              CAR<span className="text-indigo-600">ESTICS</span>
+            <Link href="/" className="text-2xl text-white tracking-tighter">
+              CAR<span className="text-yellow-400">ESTICS</span>
             </Link>
-            <div className="hidden md:flex gap-6 text-sm font-medium text-slate-600">
+            <div className="hidden md:flex gap-6 text-sm font-medium text-slate-300">
               <Link href="#" className="hover:text-indigo-600 transition-colors">Posters</Link>
               <Link href="#" className="hover:text-indigo-600 transition-colors">Bundles</Link>
               <Link href="#" className="hover:text-indigo-600 transition-colors">Apparel</Link>
@@ -118,9 +125,7 @@ export default function Home() {
             </div>
           </div>
           <div className="flex items-center gap-4">
-            <button className="p-2 text-slate-400 hover:text-indigo-600 transition-colors">
-              <Search size={20} />
-            </button>
+            
             <button className="p-2 text-slate-400 hover:text-indigo-600 transition-colors relative">
               <ShoppingBag size={20} />
               <span className="absolute top-1 right-1 w-2 h-2 bg-indigo-600 rounded-full"></span>
@@ -165,39 +170,38 @@ export default function Home() {
           </motion.h1>
 
 
-
         </div>
 
-        
+
 
         <div className="relative w-[50%] h-[300px] overflow-hidden bg-black flex items-center justify-center">
-  <AnimatePresence initial={false}>
-    <motion.img
-      key={currentIndex}
-      src={images[currentIndex]}
-      alt={`Hero slide ${currentIndex + 1}`}
-      variants={slideVariants}
-      initial="initial"
-      animate="animate"
-      exit="exit"
-      className="absolute w-full h-full object-contain"
-      style={{
-        maskImage: `
+          <AnimatePresence initial={false}>
+            <motion.img
+              key={currentIndex}
+              src={images[currentIndex]}
+              alt={`Hero slide ${currentIndex + 1}`}
+              variants={slideVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              className="absolute w-full h-full object-contain"
+              style={{
+                maskImage: `
           linear-gradient(to right, transparent, black 15%, black 85%, transparent),
           linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)
         `,
-        maskComposite: 'intersect',
-        WebkitMaskImage: `
+                maskComposite: 'intersect',
+                WebkitMaskImage: `
           linear-gradient(to right, transparent, black 15%, black 85%, transparent),
           linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)
         `,
-        WebkitMaskComposite: 'source-in', // Safari fallback for intersect
-      }}
-    />
-  </AnimatePresence>
+                WebkitMaskComposite: 'source-in', // Safari fallback for intersect
+              }}
+            />
+          </AnimatePresence>
 
-  {/* Slide Indicators (Dots) */}
-  {/* <div className="absolute bottom-4 flex gap-2 z-10">
+          {/* Slide Indicators (Dots) */}
+          {/* <div className="absolute bottom-4 flex gap-2 z-10">
     {images.map((_, index) => (
       <div
         key={index}
@@ -207,7 +211,7 @@ export default function Home() {
       />
     ))}
   </div> */}
-</div>
+        </div>
 
 
 
@@ -222,35 +226,8 @@ export default function Home() {
 
       </section>
 
-      {/* CATEGORIES GRID */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={staggerContainer}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-          >
-            {categories.map((cat, i) => (
-              <motion.div
-                key={i}
-                variants={fadeUp}
-                whileHover={{ y: -5 }}
-                className={`${cat.color} p-8 rounded-3xl cursor-pointer transition-shadow hover:shadow-xl hover:shadow-slate-200/50`}
-              >
-                <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-sm">
-                  <cat.icon size={24} className="text-slate-700" />
-                </div>
-                <h3 className="text-xl font-bold mb-2">{cat.name}</h3>
-                <p className="text-slate-600 text-sm">{cat.desc}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
 
-      {/* FEATURED PRODUCTS */}
+   {/* FEATURED PRODUCTS */}
       <section id="shop" className="py-24 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-end mb-12">
@@ -299,37 +276,95 @@ export default function Home() {
         </div>
       </section>
 
-      {/* BUNDLE PROMO SECTION */}
-      <section id="bundles" className="py-24 bg-white overflow-hidden">
+
+
+
+      {/* CATEGORIES GRID */}
+      <section className="py-20 bg-white">
+        <h2 className="text-3xl font-bold text-slate-900 px-8 max-w-7xl m-auto block mb-8">Shop by Category</h2>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-slate-900 rounded-[2.5rem] p-8 md:p-16 lg:p-20 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-12">
-            <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-indigo-500/20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3"></div>
-
-            <div className="relative z-10 max-w-xl text-white">
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">Build your perfect wall.</h2>
-              <p className="text-slate-300 text-lg mb-8">
-                Mix and match A3/A4 posters with our exclusive 3D wall signs. Create a custom bundle and automatically save up to 20% at checkout.
-              </p>
-              <button className="bg-white text-slate-900 px-8 py-4 rounded-full font-bold hover:bg-indigo-50 transition-colors">
-                Start Building
-              </button>
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0, rotate: 5, scale: 0.9 }}
-              whileInView={{ opacity: 1, rotate: 0, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="relative z-10 w-full max-w-md aspect-square bg-white/10 border border-white/20 rounded-3xl backdrop-blur-md flex items-center justify-center"
-            >
-              <div className="text-white/50 flex flex-col items-center gap-4">
-                <Layers size={48} />
-                <p>Interactive Bundle Builder Graphic</p>
-              </div>
-            </motion.div>
-          </div>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+          >
+            {categories.map((cat, i) => (
+              <motion.div
+                key={i}
+                variants={fadeUp}
+                whileHover={{ y: -5 }}
+                className={`${cat.color} p-8 rounded-3xl cursor-pointer transition-shadow hover:shadow-xl hover:shadow-slate-200/50`}
+              >
+                <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-sm">
+                  <cat.icon size={24} className="text-slate-700" />
+                </div>
+                <h3 className="text-xl font-bold mb-2">{cat.name}</h3>
+                <p className="text-slate-600 text-sm">{cat.desc}</p>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </section>
+
+
+
+     <section id="bundles" className="py-16 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Main Outer Box (Blue with Rounded Corners) */}
+        <div className="relative rounded-3xl bg-blue-950 p-8 sm:p-12 overflow-hidden text-white flex flex-col items-center text-center shadow-xl">
+          
+          {/* Subtle Ambient Glow */}
+          <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-blue-400/20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+
+          {/* Text Description */}
+          <motion.p 
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-md sm:text-xl  tracking-tight text-blue-50 max-w-3xl mb-6"
+          >
+            shop the custom aesthetic wallpaer for your prestegious wall
+          </motion.p>
+
+          {/* Compact White Button with Small Shop Icon */}
+          <motion.button 
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="inline-flex items-center gap-2 bg-white text-blue-600 hover:bg-blue-50 text-sm font-semibold px-4 py-2 rounded-full transition-all duration-200 shadow-md mb-10 hover:scale-105"
+          >
+            <ShoppingBag size={15} />
+            <span>Shop Now</span>
+          </motion.button>
+
+          {/* Single Wide / Horizontally Narrow Banner Image */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            className="w-full max-w-5xl h-32 sm:h-44 rounded-2xl overflow-hidden shadow-2xl border border-white/10"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1600&q=80" // Replace with your wide banner image URL
+              alt="Custom aesthetic wallpaper preview"
+              className="w-full h-full object-cover object-center"
+            />
+          </motion.div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+
+
+
 
       {/* FOOTER */}
       <footer className="bg-slate-50 pt-20 pb-10 border-t border-slate-200">
