@@ -6,6 +6,9 @@ import { ShoppingBag, Menu, X, ArrowRight, Package, Layers, Shirt, Box, ShieldCh
 import Link from "next/link";
 import Image from 'next/image';
 
+
+
+
 // Replace these with your actual long/narrow poster image paths
 const posterImages = [
   'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=400&q=80',
@@ -171,10 +174,10 @@ export default function Home() {
               CAR<span className="text-yellow-400">ESTICS</span>
             </Link>
             <div className="hidden md:flex gap-6 text-sm font-medium text-slate-300">
-              <Link href="#" className="hover:text-indigo-600 transition-colors">Posters</Link>
-              <Link href="#" className="hover:text-indigo-600 transition-colors">Bundles</Link>
-              <Link href="#" className="hover:text-indigo-600 transition-colors">Apparel</Link>
-              <Link href="#" className="hover:text-indigo-600 transition-colors">3D Signs</Link>
+              <Link href="/products" className="hover:text-indigo-600 transition-colors">Posters</Link>
+              <Link href="/products" className="hover:text-indigo-600 transition-colors">Bundles</Link>
+              <Link href="/products" className="hover:text-indigo-600 transition-colors">Apparel</Link>
+              <Link href="/products" className="hover:text-indigo-600 transition-colors">3D Signs</Link>
             </div>
           </div>
           <div className="flex items-center gap-4">
@@ -269,12 +272,12 @@ export default function Home() {
 
 
         <div className="flex gap-4 mt-8">
-          <button className="w-28 sm:w-36 text-center py-3 sm:py-4 rounded-full bg-white text-black cursor-pointer">
+          <Link href="/products" className="w-28 sm:w-36 text-center py-3 sm:py-4 rounded-full bg-white text-black cursor-pointer">
             Shop
-          </button>
-          <button className="w-28 sm:w-36 text-center py-3 sm:py-4 rounded-full border-2 border-white text-white hover:bg-[#191970] hover:text-white hover:border-[#191970] transition-colors duration-300 cursor-pointer">
+          </Link>
+          <Link href="/products" className="w-28 sm:w-36 text-center py-3 sm:py-4 rounded-full border-2 border-white text-white hover:bg-[#191970] hover:text-white hover:border-[#191970] transition-colors duration-300 cursor-pointer">
             Bundle
-          </button>
+          </Link>
         </div>
 
       </section>
@@ -288,7 +291,7 @@ export default function Home() {
               <h2 className="text-3xl font-bold tracking-tight mb-2">Trending Now</h2>
               <p className="text-slate-500">Our most sought-after pieces this week.</p>
             </div>
-            <Link href="#" className="hidden sm:flex items-center gap-2 text-indigo-600 font-medium hover:text-indigo-700 transition-colors">
+            <Link href="/products" className="hidden sm:flex items-center gap-2 text-indigo-600 font-medium hover:text-indigo-700 transition-colors">
               View All <ArrowRight size={16} />
             </Link>
           </div>
@@ -390,7 +393,9 @@ export default function Home() {
               className="inline-flex items-center gap-2 bg-white text-blue-600 hover:bg-blue-50 text-sm font-semibold px-4 py-2 rounded-full transition-all duration-200 shadow-md mb-10 hover:scale-105"
             >
               <ShoppingBag size={15} />
-              <span>Shop Now</span>
+              <Link href="/products?category=POSTERS">
+                <span>Shop Now</span>
+              </Link>
             </motion.button>
 
 
