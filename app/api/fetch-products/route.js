@@ -1,46 +1,36 @@
 import { NextResponse } from 'next/server';
-// 1. Import your database connection function
-import { connectToDatabase } from '@/lib/mongodb'; 
+import mongoose from 'mongoose';
+import { connectToDatabase } from '../../../lib/mongodb';
 
-// 2. Import your Mongoose model (adjust the path to where your model is saved)
-// import Product from '@/models/Product'; 
-
-export async function POST(request) {
+export async function POST() {
   try {
-    const body = await request.json();
-    const { category, limit } = body;
+    // Attempt to establish or reuse the database connection
+    await connectToDatabase();
 
-    // Validate the parameters
-    if (!category || limit === undefined) {
+    // readyState key: 0 = disconnected, 1 = connected, 2 = connecting, 3 = disconnecting
+    const isConnected = mongoose.connection.readyState === 1;
+
+    if (!isConnected) {
       return NextResponse.json(
-        { error: 'Missing required parameters: "category" or "limit"' },
-        { status: 400 }
+        { success: false, message: 'Database failed to connect.' },
+        { status: 500 }
       );
     }
 
-    // 3. Connect to MongoDB using your controller
-    await connectToDatabase();
-
-    // 4. Query the database using your Mongoose model
-    // This finds products matching the category and limits the number of results
-    // const products = await Product.find({ category }).limit(limit);
-    
-    // --- Remove this dummy data once your model is imported ---
-    const products = [
-      { id: '1', name: 'Sample Product from DB', category },
-    ];
-    // ----------------------------------------------------------
-
     return NextResponse.json(
-      { success: true, data: products }, 
+      { 
+        success: true, 
+        message: 'MongoDB is connected successfully!',
+        connectionState: mongoose.connection.readyState 
+      },
       { status: 200 }
     );
 
   } catch (error) {
-    console.error('Error fetching products:', error);
-    
+    console.error('MongoDB Connection Error:', error);
+
     return NextResponse.json(
-      { success: false, error: 'Internal Server Error' },
+      { success: false, error: 'Database connection error', details: error.message },
       { status: 500 }
     );
   }

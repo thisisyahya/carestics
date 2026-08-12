@@ -128,7 +128,12 @@ export default function Home() {
   }, []);
 
 
-
+  useEffect(() => {
+  fetch('/api/fetch-products', { method: 'POST' })
+    .then((res) => res.json())
+    .then((data) => console.log('DB Connection Status:', data))
+    .catch((err) => console.error('Fetch Error:', err));
+}, []);
 
 
   // Size specifications & pricing
