@@ -1,36 +1,36 @@
 import { NextResponse } from 'next/server';
-import mongoose from 'mongoose';
 import { connectToDatabase } from '../../../lib/mongodb';
+import Product from '../../../models/Product'; // Adjust this path to where your schema is saved
 
-export async function POST() {
+export async function GET() {
   try {
-    // Attempt to establish or reuse the database connection
+    // 1. Establish the database connection
     await connectToDatabase();
 
-    // readyState key: 0 = disconnected, 1 = connected, 2 = connecting, 3 = disconnecting
-    const isConnected = mongoose.connection.readyState === 1;
+    // 2. Fetch all products from the database
+    // .find({}) returns all documents in the collection
+    const products = await Product.find({});
 
-    if (!isConnected) {
-      return NextResponse.json(
-        { success: false, message: 'Database failed to connect.' },
-        { status: 500 }
-      );
-    }
-
+    // 3. Return the products to the frontend
     return NextResponse.json(
       { 
         success: true, 
-        message: 'MongoDB is connected successfully!',
-        connectionState: mongoose.connection.readyState 
+        count: products.length,
+        data: products 
       },
       { status: 200 }
     );
 
   } catch (error) {
-    console.error('MongoDB Connection Error:', error);
+    console.error('Failed to fetch products:', error);
 
+    // 4. Handle errors gracefully
     return NextResponse.json(
-      { success: false, error: 'Database connection error', details: error.message },
+      { 
+        success: false, 
+        error: 'Failed to fetch products', 
+        details: error.message 
+      },
       { status: 500 }
     );
   }

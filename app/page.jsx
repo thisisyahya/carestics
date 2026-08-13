@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingBag, Menu, X, ArrowRight, Package, Layers, Shirt, Box, ShieldCheck, Sparkles, FileImage, Palette, Upload, Check } from "lucide-react";
 import Link from "next/link";
+import CartOverlay from '../components/CartOverlay'
+
 import Image from 'next/image';
 
 
@@ -18,10 +20,10 @@ const posterImages = [
 ];
 // --- DUMMY DATA ---
 const categories = [
-  { name: "Premium Posters", desc: "A3 & A4 Museum Quality", icon: Layers, color: "bg-blue-50" },
-  { name: "Custom Bundles", desc: "Mix, Match & Save", icon: Package, color: "bg-rose-50" },
-  { name: "Printed Apparel", desc: "Art You Can Wear", icon: Shirt, color: "bg-emerald-50" },
-  { name: "3D Wall Signs", desc: "Textured 2D/3D Art", icon: Box, color: "bg-amber-50" },
+  { name: "3d Posters", desc: "A3 & A4 Museum Quality", icon: Layers, color: "bg-blue-50" },
+  { name: "Split posters", desc: "Mix, Match & Save", icon: Package, color: "bg-rose-50" },
+  { name: "Car cubes", desc: "cool decoration", icon: Shirt, color: "bg-emerald-50" },
+  { name: "Hand drawing", desc: "Custom requested by Artist", icon: Box, color: "bg-amber-50" },
 ];
 
 const featuredProducts = [
@@ -114,6 +116,8 @@ export default function Home() {
   // 2. State to track the currently active image ID (defaults to 1)
   const [activeId, setActiveId] = useState(1);
 
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
   // 3. Find the hero image URL based on the active ID
   const currentHero = imageData.find((img) => img.id === activeId)?.hero || imageData[0].hero;
 
@@ -128,12 +132,7 @@ export default function Home() {
   }, []);
 
 
-  useEffect(() => {
-  fetch('/api/fetch-products', { method: 'POST' })
-    .then((res) => res.json())
-    .then((data) => console.log('DB Connection Status:', data))
-    .catch((err) => console.error('Fetch Error:', err));
-}, []);
+
 
 
   // Size specifications & pricing
@@ -179,15 +178,18 @@ export default function Home() {
               CAR<span className="text-yellow-400">ESTICS</span>
             </Link>
             <div className="hidden md:flex gap-6 text-sm font-medium text-slate-300">
-              <Link href="/products" className="hover:text-indigo-600 transition-colors">Posters</Link>
-              <Link href="/products" className="hover:text-indigo-600 transition-colors">Bundles</Link>
-              <Link href="/products" className="hover:text-indigo-600 transition-colors">Apparel</Link>
-              <Link href="/products" className="hover:text-indigo-600 transition-colors">3D Signs</Link>
+              <Link href="/" className="hover:text-indigo-600 transition-colors">Home</Link>
+              <Link href="/products" className="hover:text-indigo-600 transition-colors">3d Posters</Link>
+              <Link href="/products" className="hover:text-indigo-600 transition-colors">Car cubes</Link>
+              <Link href="/products" className="hover:text-indigo-600 transition-colors">Split posters</Link>
+
             </div>
           </div>
           <div className="flex items-center gap-4">
 
-            <button className="p-2 text-slate-400 hover:text-indigo-600 transition-colors relative">
+            <button className="p-2 text-slate-400 hover:text-indigo-600 transition-colors relative"
+              onClick={() => setIsCartOpen(true)}
+            >
               <ShoppingBag size={20} />
               <span className="absolute top-1 right-1 w-2 h-2 bg-indigo-600 rounded-full"></span>
             </button>
@@ -277,12 +279,12 @@ export default function Home() {
 
 
         <div className="flex gap-4 mt-8">
-          <Link href="/products" className="w-28 sm:w-36 text-center py-3 sm:py-4 rounded-full bg-white text-black cursor-pointer">
-            Shop
+          <Link href="/products" className="w-32 sm:w-48 text-center py-3 sm:py-4 rounded-full bg-white text-black cursor-pointer">
+            Shop now
           </Link>
-          <Link href="/products" className="w-28 sm:w-36 text-center py-3 sm:py-4 rounded-full border-2 border-white text-white hover:bg-[#191970] hover:text-white hover:border-[#191970] transition-colors duration-300 cursor-pointer">
+          {/* <Link href="/products" className="w-28 sm:w-36 text-center py-3 sm:py-4 rounded-full border-2 border-white text-white hover:bg-[#191970] hover:text-white hover:border-[#191970] transition-colors duration-300 cursor-pointer">
             Bundle
-          </Link>
+          </Link> */}
         </div>
 
       </section>
@@ -422,8 +424,8 @@ export default function Home() {
                       onClick={() => setActiveId(img.id)}
                       // I've added a cursor-pointer and dynamic borders/opacity so the active thumbnail stands out
                       className={`h-16 w-16 sm:h-20 sm:w-20 shrink-0 aspect-square object-cover rounded-md cursor-pointer transition-all duration-200 ${activeId === img.id
-                          ? "border-2 border-white opacity-100" // Active state
-                          : "border border-white/40 opacity-60 hover:opacity-100" // Inactive state
+                        ? "border-2 border-white opacity-100" // Active state
+                        : "border border-white/40 opacity-60 hover:opacity-100" // Inactive state
                         }`}
                     />
                   ))}
@@ -452,8 +454,7 @@ export default function Home() {
 
 
 
-
-      <section className="relative  bg-black max-w-6xl rounded-3xl sm:mx-auto overflow-hidden font-sans mb-20 mx-4">
+      <section className="relative bg-black max-w-6xl rounded-3xl sm:mx-auto overflow-hidden font-sans mb-20 mx-4">
         {/* 
         Pencilled / Noise Texture Overlay 
         Replace the background image URL with your actual texture asset.
@@ -470,113 +471,65 @@ export default function Home() {
 
             {/* Hand-Drawn Image Container */}
             <div className="w-full rounded-xl overflow-hidden border border-zinc-800/80 bg-zinc-900 relative group">
-              <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
+              <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
               <img
                 src="/drawings/hero-p1.PNG"
                 alt="Custom hand drawn portrait example"
-                className="w-full h-80 sm:h-[480px] object-cover object-center grayscale-[20%] contrast-125"
+                className="w-full h-80 sm:h-[480px] object-cover object-center grayscale-[20%] contrast-125 transition-transform duration-700 group-hover:scale-105"
               />
+
+              {/* Optional: Small label indicating it's a sample */}
+              <div className="absolute bottom-4 right-4 z-20 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
+                <span className="text-[10px] uppercase tracking-widest font-semibold text-zinc-300">
+                  Sample Sketch
+                </span>
+              </div>
             </div>
 
-            {/* Minimal Upload & Form */}
+            {/* Information & Call to Action */}
             <div className="flex flex-col justify-center space-y-10">
 
-              {/* Header */}
-              <div className="space-y-3">
-                <h2 className="text-3xl sm:text-4xl font-light tracking-tight text-zinc-50">
-                  Commission a <span className="font-semibold">Portrait</span>
+              <div className="space-y-4">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-800/50 border border-zinc-700 w-fit">
+                  <span className="text-zinc-300 text-[10px] tracking-[0.2em] uppercase font-bold">
+                    Bespoke Commission
+                  </span>
+                </div>
+
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light tracking-tight text-zinc-50 leading-tight">
+                  Commission a <br />
+                  <span className="font-semibold">Hand-Drawn Portrait</span>
                 </h2>
+
                 <p className="text-zinc-400 text-sm sm:text-base leading-relaxed max-w-md">
-                  Upload your reference photo, select a canvas size, and our artists will meticulously sketch it on premium archival paper.
+                  Turn your hypercar or prized vehicle into a timeless masterpiece. We offer bespoke pencil sketches featuring abstract shading on premium archival paper.
                 </p>
-              </div>
 
-              <div className="space-y-8">
-                {/* Drag and Drop Zone */}
-                <div
-                  onDragEnter={handleDrag}
-                  onDragLeave={handleDrag}
-                  onDragOver={handleDrag}
-                  onDrop={handleDrop}
-                  className={`relative rounded-xl p-8 text-center transition-all duration-300 ease-in-out cursor-pointer border ${dragActive
-                    ? 'border-zinc-400 bg-zinc-800/50'
-                    : uploadedFile
-                      ? 'border-zinc-500 bg-zinc-800/20'
-                      : 'border-zinc-800 hover:border-zinc-600 bg-zinc-900/30'
-                    }`}
-                >
-                  <input
-                    type="file"
-                    id="drawing-upload"
-                    accept="image/*"
-                    onChange={handleFileChange}
-                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                  />
-
-                  {uploadedFile ? (
-                    <div className="flex flex-col items-center justify-center gap-3 animate-in fade-in zoom-in duration-300">
-                      <div className="w-12 h-12 rounded-full bg-zinc-100 text-zinc-900 flex items-center justify-center">
-                        <Check size={20} strokeWidth={2.5} />
-                      </div>
-                      <p className="text-sm font-medium text-zinc-200 truncate max-w-[200px]">
-                        {uploadedFile.name}
-                      </p>
-                    </div>
-                  ) : (
-                    <div className="flex flex-col items-center gap-4">
-                      <div className="w-12 h-12 rounded-full bg-zinc-800/80 flex items-center justify-center text-zinc-400">
-                        <Upload size={18} strokeWidth={2} />
-                      </div>
-                      <div className="space-y-1">
-                        <p className="text-sm font-medium text-zinc-300">
-                          Drag & drop an image
-                        </p>
-                        <p className="text-xs text-zinc-500">
-                          or click to browse files
-                        </p>
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {/* Size Selector */}
-                <div>
-                  <label className="block text-[11px] font-medium text-zinc-500 uppercase tracking-widest mb-4">
-                    Dimensions
-                  </label>
-                  <div className="grid grid-cols-3 gap-3 sm:gap-4">
-                    {sizes.map((size) => {
-                      const isSelected = selectedSize === size.id;
-                      return (
-                        <button
-                          key={size.id}
-                          type="button"
-                          onClick={() => setSelectedSize(size.id)}
-                          className={`py-4 px-3 rounded-xl border text-center transition-all duration-200 flex flex-col items-center justify-center gap-1 ${isSelected
-                            ? 'border-zinc-200 bg-zinc-200 text-zinc-950 shadow-sm'
-                            : 'border-zinc-800 bg-transparent text-zinc-400 hover:border-zinc-600 hover:text-zinc-300'
-                            }`}
-                        >
-                          <span className="font-semibold text-sm block tracking-wide">
-                            {size.label}
-                          </span>
-                          <span className={`text-[10px] block ${isSelected ? 'text-zinc-600' : 'text-zinc-500'}`}>
-                            {size.dimensions}
-                          </span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
+                <ul className="space-y-2 mt-4 text-sm text-zinc-400">
+                  <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-zinc-500"></span>
+                    Available in A4 and A3 dimensions
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-zinc-500"></span>
+                    Optional premium framing
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-zinc-500"></span>
+                    Custom ambient backlighting upgrades
+                  </li>
+                </ul>
               </div>
 
               {/* Action Button */}
-              <button
-                type="button"
-                className="w-full bg-zinc-100 hover:bg-white text-zinc-950 font-semibold text-sm tracking-wide py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(255,255,255,0.05)] hover:shadow-[0_0_25px_rgba(255,255,255,0.1)] active:scale-[0.99]"
-              >
-                Order Hand Drawing
-              </button>
+              <div>
+                <Link
+                  href="/products"
+                  className="inline-flex justify-center items-center w-full sm:w-auto bg-zinc-100 hover:bg-white text-zinc-950 font-semibold text-sm tracking-wide px-8 py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(255,255,255,0.05)] hover:shadow-[0_0_25px_rgba(255,255,255,0.1)] active:scale-[0.99]"
+                >
+                  Order Your Sketch
+                </Link>
+              </div>
 
             </div>
           </div>
@@ -649,10 +602,10 @@ export default function Home() {
             <div>
               <h4 className="font-bold text-white mb-6">Shop</h4>
               <ul className="space-y-4 text-neutral-400">
-                <li><Link href="#" className="hover:text-indigo-400 transition-colors">A3/A4 Posters</Link></li>
-                <li><Link href="#" className="hover:text-indigo-400 transition-colors">Custom Bundles</Link></li>
-                <li><Link href="#" className="hover:text-indigo-400 transition-colors">Printed Apparel</Link></li>
-                <li><Link href="#" className="hover:text-indigo-400 transition-colors">3D Wall Signs</Link></li>
+                <li><Link href="/products" className="hover:text-indigo-400 transition-colors">A4 Posters</Link></li>
+                <li><Link href="/products" className="hover:text-indigo-400 transition-colors">Custom Bundles</Link></li>
+                <li><Link href="/products" className="hover:text-indigo-400 transition-colors">Hand drawings</Link></li>
+                <li><Link href="/products" className="hover:text-indigo-400 transition-colors">3D Posters</Link></li>
               </ul>
             </div>
 
@@ -660,10 +613,19 @@ export default function Home() {
             <div>
               <h4 className="font-bold text-white mb-6">Support</h4>
               <ul className="space-y-4 text-neutral-400">
-                <li><Link href="#" className="hover:text-indigo-400 transition-colors">Shipping & Returns</Link></li>
-                <li><Link href="#" className="hover:text-indigo-400 transition-colors">FAQ</Link></li>
-                <li><Link href="#" className="hover:text-indigo-400 transition-colors">Contact Us</Link></li>
-                <li><Link href="#" className="hover:text-indigo-400 transition-colors">Track Order</Link></li>
+                <li><Link href="shipping-and-returns" className="hover:text-indigo-400 transition-colors">Shipping & Returns</Link></li>
+                {/* <li><Link href="#" className="hover:text-indigo-400 transition-colors">FAQ</Link></li> */}
+                <li>
+                  <a
+                    href={`https://wa.me/923359528726?text=${encodeURIComponent("Hello! I need some help regarding my order.")}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-indigo-400 transition-colors"
+                  >
+                    Contact Us
+                  </a>
+                </li>
+                {/* <li><Link href="#" className="hover:text-indigo-400 transition-colors">Track Order</Link></li> */}
               </ul>
             </div>
           </div>
@@ -672,13 +634,14 @@ export default function Home() {
           <div className="border-t border-neutral-900 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-neutral-500">
             <p>© {new Date().getFullYear()} ArtVibe. All rights reserved.</p>
             <div className="flex gap-6">
-              <Link href="#" className="hover:text-neutral-300 transition-colors">Privacy Policy</Link>
-              <Link href="#" className="hover:text-neutral-300 transition-colors">Terms of Service</Link>
+              <Link href="/privacy-policy" className="hover:text-neutral-300 transition-colors">Privacy Policy</Link>
+              <Link href="/about" className="hover:text-neutral-300 transition-colors">About</Link>
             </div>
           </div>
         </div>
       </footer>
 
+      <CartOverlay isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </div>
   );
 }
