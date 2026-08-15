@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation'; 
 import CartOverlay from '../../components/CartOverlay'
 
-const categories = ['All', 'Split posters', '3d posters', 'Car cubes'];
+const categories = ['All', 'split posters', '3d posters', 'car cubes'];
 
 export default function ProductsPage() {
   const router = useRouter();
